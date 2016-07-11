@@ -335,9 +335,12 @@ public class SimplePDF{
         UIGraphicsBeginPDFContextToData(pdfData, pageBounds, nil)
         UIGraphicsBeginPDFPageWithInfo(pageBounds, nil)
         
+    
+        let pdfContext=UIGraphicsGetCurrentContext();  // JR additions
+        
         var currentYoffset = pageMargin
         var alignment = ContentAlignment.Left
-        var font = UIFont.systemFontOfSize( UIFont.systemFontSize() )
+        var font = UIFont.systemFontOfSize( UIFont.systemFontSize() * 4.0 )  // JR additions
         
         for command in commands{
             
@@ -377,6 +380,11 @@ public class SimplePDF{
             }
             
         }
+        
+        CGContextSaveGState(pdfContext);  // JR additions
+        CGContextConcatCTM(pdfContext,CGAffineTransformMakeScale(0.25, 0.25)); // JR additions
+        
+        
         
         UIGraphicsEndPDFContext()
         
